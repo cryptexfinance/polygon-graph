@@ -1,0 +1,6 @@
+{
+  "network": "matic",
+  "maticvault-address": "0xEecF07643384C689C7AB804887ef2187cE75D5Ec",
+  "chainlink-oracle-address": "0x372226e23f02e3e7a9a7bf4bf48922a9915a598d",
+  "start-block": "17372710"
+}

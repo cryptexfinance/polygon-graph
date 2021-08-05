@@ -1,0 +1,87 @@
+specVersion: 0.0.2
+repository: https://github.com/jdestephen/tcap-demo
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: MATICVault
+    network: matic
+    source:
+      address: "0xEecF07643384C689C7AB804887ef2187cE75D5Ec"
+      abi: MATICVault
+      startBlock: 17372710
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Vault
+      abis:
+        - name: MATICVault
+          file: MATICVault/abis/MATICVault.json
+      eventHandlers:
+        - event: CollateralAdded(indexed address,indexed uint256,uint256)
+          handler: handleCollateralAdded
+        - event: TokensBurned(indexed address,indexed uint256,uint256)
+          handler: handleTokensBurned
+        - event: VaultCreated(indexed address,indexed uint256)
+          handler: handleVaultCreated
+        - event: VaultLiquidated(indexed uint256,indexed address,uint256,uint256)
+          handler: handleVaultLiquidated
+        - event: TokensMinted(indexed address,indexed uint256,uint256)
+          handler: handleTokensMinted
+        - event: CollateralRemoved(indexed address,indexed uint256,uint256)
+          handler: handleCollateralRemoved
+      file: MATICVault/MATICVault.wasm
+  - kind: ethereum/contract
+    name: MATICState
+    network: matic
+    source:
+      address: "0xEecF07643384C689C7AB804887ef2187cE75D5Ec"
+      abi: MATICVault
+      startBlock: 17372710
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - State
+      abis:
+        - name: MATICVault
+          file: MATICState/abis/MATICVault.json
+      eventHandlers:
+        - event: NewBurnFee(indexed address,uint256)
+          handler: handleNewBurnFee
+        - event: NewLiquidationPenalty(indexed address,uint256)
+          handler: handleNewLiquidationPenalty
+        - event: NewRatio(indexed address,uint256)
+          handler: handleNewRatio
+        - event: NewTreasury(indexed address,address)
+          handler: handleNewTreasury
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: MATICState/MATICState.wasm
+  - kind: ethereum/contract
+    name: TCAP
+    network: matic
+    source:
+      address: "0x372226e23f02e3e7a9a7bf4bf48922a9915a598d"
+      abi: Oracle
+      startBlock: 17372710
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Oracle
+      abis:
+        - name: Oracle
+          file: TCAP/abis/Oracle.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+          handler: handleAnswerUpdated
+      file: TCAP/TCAP.wasm

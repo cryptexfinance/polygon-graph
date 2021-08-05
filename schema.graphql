@@ -1,0 +1,45 @@
+type Vault @entity {
+	id: ID!
+	vaultId: BigInt
+	owner: Bytes! #address
+	collateral: BigInt
+	debt: BigInt
+	currentRatio: BigInt
+	address: Bytes #address
+}
+
+type State @entity {
+	id: ID!
+	owner: Bytes #address
+	isPaused: Boolean
+	tcapContract: Bytes #address
+	collateralContract: Bytes #address
+	collateralOracle: Bytes #address
+	ethContract: Bytes #address
+	tcapOracle: Bytes #address
+	burnFee: BigInt
+	liquidationPenalty: BigInt
+	ratio: BigInt
+	divisor: BigInt
+	amountStaked: BigInt
+	rewardContract: Bytes #3
+	treasuryContract: Bytes #address
+}
+
+type Oracle @entity {
+	id: ID!
+	address: Bytes #address
+	answer: BigInt
+	updatedAt: BigInt
+	roundId: BigInt
+}
+
+type Protocol @entity {
+	id: ID!
+	address: Bytes #address
+	totalCollateral: BigInt
+	totalDebt: BigInt
+	totalBurnFee: BigInt
+	createdVaults: BigInt
+	totalTransactions: BigInt
+}
